@@ -1,0 +1,17 @@
+### IntelliJ IDEA ###
+.idea
+out
+*.iws
+*.iml
+*.ipr
+target/
+upload/
+public/
+
+### NetBeans ###
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/

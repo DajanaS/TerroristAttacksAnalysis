@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container-fluid header" style="text-align:center">
+  <h1>{{ title }}</h1>
+  <img src="../assets/img/logo.png" width="128"/>
+</div>
+
+<div class="container-fluid">
+  <div class="row content">
+
+    <div class="col-sm-3 side-list">
+      <div class="form-group">
+        <label for="dropdown-list" class="small-title">Choose a category of terrorist attacks</label>
+        <select (change)="showAnalysisDetails($event)" class="form-control" id="dropdown-list">
+          <option value="" selected disabled>Please select a category</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="col-sm-9 data" style="text-align:center">
+      <h2>Data analysis</h2>
+      <app-analysis-details></app-analysis-details>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  Project is made for educational purposes, for the subject Web Based Systems at the Faculty of Computer Science and
+  Engineering - Skopje.
+</footer>
+
+</body>
+</html>

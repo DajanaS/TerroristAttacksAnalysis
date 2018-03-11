@@ -1,0 +1,36 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  max-width: 100%;
+}
+
+.item {
+  max-width: 150px;
+  max-height: 150px;
+  margin: 15px;
+}
+
+img {
+  max-width: 100%;
+  height: 50%;
+}
+
+a {
+  color: #C70039;
+  text-decoration: underline;
+}
+
+.read-more {
+  color: blue;
+  font-style: oblique;
+  font-size: 20px;
+}
+
+.related {
+  color: #C70039;
+  font-size: 22px;
+  font-weight: bold;
+  float:left;
+  margin-left: 50px;
+}

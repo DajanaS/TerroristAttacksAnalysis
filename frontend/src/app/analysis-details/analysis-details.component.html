@@ -1,0 +1,19 @@
+<div class="card" style="border: none;">
+  <h4 class="card-title">*Something* detailed analysis</h4>
+  <h6 class="card-subtitle text-muted">Data is taken at 10.03.2018</h6>
+  <div class="card-text" style="margin: 15px;">--- Some data analysis here ---</div>
+  <div class="row">
+    <div class="col">
+      <p class="related">Related: </p>
+    </div>
+    <div class="col">
+      <a class="read-more" href="">Read more <small>>></small></a>
+    </div>
+  </div>
+  <div class="container">
+    <div class="item" *ngFor="let item of richSnippets">
+      <img src={{item.img}}/><br/>
+      <a href="{{item.url}}">{{item.title}}</a>
+    </div>
+  </div>
+</div>
