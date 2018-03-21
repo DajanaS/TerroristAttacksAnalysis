@@ -9,8 +9,10 @@ import {WebService} from '../web.service';
   styleUrls: ['./analysis-details.component.css']
 })
 export class AnalysisDetailsComponent implements OnInit {
+  showDetails = false;
   terroristAttack: TerroristAttack;
   richSnippets: RichSnippet[] = [];
+  eventCode: number;
   urls = [
     'https://medium.com/@unakravets/the-sad-state-of-entitled-web-developers-e4f314764dd',
     'http://frontendnewsletter.com/issues/1#start',
@@ -18,18 +20,25 @@ export class AnalysisDetailsComponent implements OnInit {
     'https://www.youtube.com/watch?v=9kJVYpOqcVU',
   ];
 
-  constructor(private webService: WebService) {
+  constructor(private web: WebService) {
   }
 
   ngOnInit() {
-    this.terroristAttack = new TerroristAttack();
-    this.terroristAttack.country = '../assets/img/graph.jpg';
-    // listen on event change and update the terroristAttack
-    this.webService.getResults().subscribe(response => {
-      this.hndlr(response);
+    this.web.eventCodeChanged$.subscribe(code => {
+      this.eventCode = code;
+      this.showDetails = false;
     });
+
+    /* this.webService.getResults().subscribe(response => {
+      this.hndlr(response);
+    }); */
   }
 
+  funkcijaShtoSePovikuvaNaKlikNaNekojNastan() {
+    this.showDetails = true;
+  }
+
+  /*
   hndlr(response) {
     for (let i = 0; i < response.items.length; i++) {
       const item = response.items[i];
@@ -45,5 +54,5 @@ export class AnalysisDetailsComponent implements OnInit {
         this.richSnippets.push(new RichSnippet(item.title, '../../assets/img/logo.png', url));
       }
     }
-  }
+  }*/
 }

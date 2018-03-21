@@ -12,7 +12,8 @@ import {WebService} from './web.service';
     AnalysisDetailsComponent
   ],
   imports: [
-    BrowserModule, HttpClientModule
+    BrowserModule,
+    HttpClientModule
   ],
   providers: [WebService],
   bootstrap: [AppComponent]

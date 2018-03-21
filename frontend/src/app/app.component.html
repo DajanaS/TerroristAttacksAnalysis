@@ -22,11 +22,8 @@
       <div class="form-group">
         <label for="dropdown-list" class="small-title">Choose a category of terrorist attacks</label>
         <select (change)="showAnalysisDetails($event)" class="form-control" id="dropdown-list">
-          <option value="" selected disabled>Please select a category</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
+          <option value="" selected disabled hidden>Please select a category</option>
+          <option *ngFor="let key of keys" value={{key}}>{{eventNames[key]}}</option>
         </select>
       </div>
     </div>
