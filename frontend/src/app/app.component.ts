@@ -16,7 +16,7 @@ export class AppComponent {
   }
 
   initializeEventNames() {
-    this.web.getCategories().subscribe(map => {
+    this.web.getDistinctCategories().subscribe(map => {
       this.eventNames = map;
       this.keys = Object.keys(this.eventNames);
     });
@@ -25,9 +25,5 @@ export class AppComponent {
   showAnalysisDetails($event) {
     const event_code = $event.target.value;
     this.web.changeEventCode(event_code);
-  }
-
-  getCategories() {
-    // povik do web servisot . subscribe (categories == )
   }
 }

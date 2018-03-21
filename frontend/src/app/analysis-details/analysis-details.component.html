@@ -1,20 +1,44 @@
 <div *ngIf="showDetails && terroristAttack" class="card" style="border: none;">
   <h4 class="card-title">Terrorist attack's detailed analysis</h4>
   <h6 class="card-subtitle text-muted">Data is taken at 10.03.2018</h6>
-  <div class="card-text" style="margin: 15px;">--- Some data analysis here ---</div>
-  <div class="row">
+  <div class="card-text" style="margin: 15px;">
+    <table>
+      <tr *ngIf="terroristAttack.country">
+        <th>Country:</th>
+        <td>{{terroristAttack.country}}</td>
+      </tr>
+      <tr *ngIf="terroristAttack.date">
+        <th>Date:</th>
+        <td>{{terroristAttack.date | date}}</td>
+      </tr>
+      <tr *ngIf="terroristAttack.numSources">
+        <th>Number of sources:</th>
+        <td>{{terroristAttack.numSources}}</td>
+      </tr>
+      <tr>
+        <th>Scale:</th>
+        <td>{{terroristAttack.scale}}</td>
+      </tr>
+      <tr>
+    </table>
+  </div>
+  <div class=" row
+      ">
     <div class="col">
-      <p class="related">Related: </p>
+      <p class="related">Related by country:</p>
     </div>
     <div class="col">
-      <a class="read-more" href="">Read more <small>>></small></a>
+      <a class="read-more" href={{terroristAttack.urls}} target="_blank">Read more
+        <small>>></small>
+      </a>
     </div>
   </div>
   <div class="container">
     <div class="item" *ngFor="let item of richSnippets">
       <img src={{item.img}}/><br/>
-      <a href="{{item.url}}">{{item.title}}</a>
+      <a href="{{item.url}}" target="_blank">{{item.title}}</a>
     </div>
+    <div *ngIf="richSnippets.length==0">Loading... or not available...</div>
   </div>
 </div>
 
@@ -23,7 +47,8 @@
   <div class="container">
     <div class="item" *ngFor="let item of richSnippets">
       <img src={{item.img}}/><br/>
-      <a href="{{item.url}}">{{item.title}}</a>
+      <button class="btn-link" (click)="showEventDetails(item.attack)">{{item.title}}</button>
     </div>
+    <div *ngIf="richSnippets.length==0">Loading... or not available...</div>
   </div>
 </div>

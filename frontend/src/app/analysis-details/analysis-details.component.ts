@@ -10,49 +10,50 @@ import {WebService} from '../web.service';
 })
 export class AnalysisDetailsComponent implements OnInit {
   showDetails = false;
+  attacks: TerroristAttack[];
+  richSnippets: RichSnippet[];
   terroristAttack: TerroristAttack;
-  richSnippets: RichSnippet[] = [];
   eventCode: number;
-  urls = [
-    'https://medium.com/@unakravets/the-sad-state-of-entitled-web-developers-e4f314764dd',
-    'http://frontendnewsletter.com/issues/1#start',
-    'https://groups.google.com/forum/#!topic/v8-users/PInzACvS5I4',
-    'https://www.youtube.com/watch?v=9kJVYpOqcVU',
-  ];
 
   constructor(private web: WebService) {
   }
 
   ngOnInit() {
     this.web.eventCodeChanged$.subscribe(code => {
+      this.terroristAttack = undefined;
       this.eventCode = code;
       this.showDetails = false;
-    });
-
-    /* this.webService.getResults().subscribe(response => {
-      this.hndlr(response);
-    }); */
+      this.web.getTerroristAttacksByCategory(this.eventCode).subscribe(attacks => {
+          this.attacks = attacks;
+          this.createRichSnipperForEachAttack();
+        },
+        error2 => console.log(error2));
+    }, error2 => console.log(error2));
   }
 
-  funkcijaShtoSePovikuvaNaKlikNaNekojNastan() {
+  showEventDetails(attack: TerroristAttack) {
+    this.eventCode = undefined;
+    this.terroristAttack = attack;
     this.showDetails = true;
+    this.web.getTerroristAttacksByCountry(attack.countryCode).subscribe(attacks => {
+      this.attacks = attacks;
+      this.createRichSnipperForEachAttack();
+    }, error2 => console.log(error2));
   }
 
-  /*
-  hndlr(response) {
-    for (let i = 0; i < response.items.length; i++) {
-      const item = response.items[i];
-      let url = item.formattedUrl;
-      if (url.substring(0, 4) !== 'http') {
-        url = 'https://' + item.formattedUrl;
-      }
-      if (item.pagemap != null && item.pagemap.cse_image != null) {
-        this.richSnippets.push(new RichSnippet(item.title, item.pagemap.cse_image[0].src, url));
-      } else if (item.pagemap != null && item.pagemap.cse_thumbnail != null) {
-        this.richSnippets.push(new RichSnippet(item.title, item.pagemap.cse_thumbnail[0].src, url));
-      } else {
-        this.richSnippets.push(new RichSnippet(item.title, '../../assets/img/logo.png', url));
-      }
+  createRichSnipperForEachAttack() {
+    this.richSnippets = [];
+    for (let i = 0; i < this.attacks.length; i++) {
+      this.web.getMetaDataFromURL(this.attacks[i].urls).subscribe(response => {
+        this.createRichSnippet(response, this.attacks[i]);
+      }, error2 => console.log(error2));
     }
-  }*/
+  }
+
+  createRichSnippet(response, attack: TerroristAttack) {
+    const url = response.url.substring(0, 4) !== 'http' ? 'https://' + response.url : response.url;
+    const title = response.title != null ? response.title : response.url;
+    const image = response.images != null ? response.images[0].url : '../../assets/img/logo.png';
+    this.richSnippets.push(new RichSnippet(title, image, url, attack));
+  }
 }

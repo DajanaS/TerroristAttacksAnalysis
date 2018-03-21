@@ -6,5 +6,5 @@ export class TerroristAttack {
   numSources: number;
   country: string;
   countryCode: string;
-  URLs: string;
+  urls: string;
 }

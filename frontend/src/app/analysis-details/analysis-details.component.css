@@ -31,6 +31,15 @@ a {
   color: #C70039;
   font-size: 22px;
   font-weight: bold;
-  float:left;
+  float: left;
   margin-left: 50px;
+}
+
+th, td {
+  padding: 15px;
+  text-align: left;
+}
+
+table {
+  margin: 0 auto;
 }

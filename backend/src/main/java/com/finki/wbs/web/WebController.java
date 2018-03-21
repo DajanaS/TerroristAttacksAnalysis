@@ -46,4 +46,16 @@ public class WebController {
         map.put(186, "Assassinate");
         return map;
     }
+
+    @GetMapping("/{eventCode}")
+    @ResponseBody
+    public List<TerroristAttack> getTerroristAttacksByCategory(@PathVariable Integer eventCode) {
+        return terroristAttackRepository.findTerroristAttackByEventCode(eventCode);
+    }
+
+    @GetMapping("/country/{countryCode}")
+    @ResponseBody
+    public List<TerroristAttack> getTerroristAttacksByEventCodeAndCountryCode(@PathVariable String countryCode) {
+        return terroristAttackRepository.findTerroristAttackByCountryCode(countryCode);
+    }
 }

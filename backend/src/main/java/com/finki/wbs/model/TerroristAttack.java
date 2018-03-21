@@ -11,7 +11,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "main_table", schema="vbs")
+@Table(name = "main_table", schema = "vbs")
 public class TerroristAttack {
 
     @Id
@@ -36,5 +36,5 @@ public class TerroristAttack {
     private String countryCode;
 
     @Column(name = "sourceurls")
-    private String URLs;
+    private String urls;
 }
