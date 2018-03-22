@@ -1,0 +1,28 @@
+First create a schema named vbs.
+
+Then create a table with the following code:
+
+CREATE TABLE vbs.main_table(
+		datum date default null,
+		event_code integer default null,
+		goldstein_scale float default null,
+		num_sources integer default null,
+		geo_country text default null,
+		geo_country_code text default null,
+		sourceurls text default null)
+
+Then from the .csv file fill in the table:
+
+COPY vbs.main_table 
+FROM 'path to csv file' DELIMITER ',' CSV HEADER;
+
+--If in the csv file there are no primary keys, in DBEAVER execute the following query:
+
+ALTER TABLE main_table ADD COLUMN id SERIAL PRIMARY KEY
+
+
+--Index of the column for country codes:
+create index geo_country_code_idx on main_table (geo_country_code);
+
+
+

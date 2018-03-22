@@ -18,7 +18,7 @@ export class WebService {
   }
 
   getMetaDataFromURL(url) {
-    return this.http.get('https://api.embedly.com/1/extract?key=4c66a827c3284fc08cd7d7d26b6e8ecb&url=' + url);
+    return this.http.get('https://api.embedly.com/1/extract?key=b15cf178684340c9be4348dd70922c4b&url=' + url);
   }
 
   getDistinctCategories(): Observable<Object> {
