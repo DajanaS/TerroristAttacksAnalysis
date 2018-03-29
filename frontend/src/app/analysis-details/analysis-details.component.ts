@@ -52,7 +52,10 @@ export class AnalysisDetailsComponent implements OnInit {
 
   createRichSnippet(response, attack: TerroristAttack) {
     const url = response.url.substring(0, 4) !== 'http' ? 'https://' + response.url : response.url;
-    const title = response.title != null ? response.title : response.url;
+    let title = response.title != null ? response.title : response.url;
+    if (title.split(' ').length > 6) {
+      title = title.split(/\s+/).slice(0, 6).join(' ') + '...';
+    }
     const image = response.images != null ? response.images[0].url : '../../assets/img/logo.png';
     this.richSnippets.push(new RichSnippet(title, image, url, attack));
   }

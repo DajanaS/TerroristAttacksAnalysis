@@ -9,6 +9,7 @@ export class WebService {
   api = 'http://localhost:8080/terrorist-attacks';
   private eventCodeChangedSource = new Subject<number>();
   eventCodeChanged$ = this.eventCodeChangedSource.asObservable();
+  app_embed_ly_key = 'bc159c9cdb7d48bdb0238aa465a1f2fc';
 
   changeEventCode(eventCode: number) {
     this.eventCodeChangedSource.next(eventCode);
@@ -18,7 +19,7 @@ export class WebService {
   }
 
   getMetaDataFromURL(url) {
-    return this.http.get('https://api.embedly.com/1/extract?key=b15cf178684340c9be4348dd70922c4b&url=' + url);
+    return this.http.get('https://api.embedly.com/1/extract?key=' + this.app_embed_ly_key + '&url=' + url);
   }
 
   getDistinctCategories(): Observable<Object> {

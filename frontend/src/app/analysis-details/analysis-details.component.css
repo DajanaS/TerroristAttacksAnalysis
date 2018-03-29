@@ -43,3 +43,8 @@ th, td {
 table {
   margin: 0 auto;
 }
+
+.small-details {
+  font-size: 12px;
+  color: grey;
+}
