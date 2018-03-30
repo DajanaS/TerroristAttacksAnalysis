@@ -6,15 +6,19 @@ import {AppComponent} from './app.component';
 import {AnalysisDetailsComponent} from './analysis-details/analysis-details.component';
 import {WebService} from './web.service';
 import {DatePipe} from '@angular/common';
+import {AppRoutingModule} from './app-routing.module';
+import {HomeComponent} from './home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    AnalysisDetailsComponent
+    AnalysisDetailsComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
-    HttpClientModule
+    HttpClientModule,
+    AppRoutingModule
   ],
   providers: [WebService, DatePipe],
   bootstrap: [AppComponent]

@@ -38,13 +38,13 @@ public class WebController {
     public Map<Integer, String> getAllDistinctCategoriesOfAttacks() {
         Map<Integer, String> map = new HashMap<>();
         map.put(18, "Assault");
-        map.put(180, "Use unconventional violence, not specified below");
+        map.put(180, "Use unconventional violence");
         map.put(181, "Abduct, hijack, or take hostag");
         map.put(182, "Physically assault, not specified below");
         map.put(1821, "Sexually assault");
         map.put(1822, "Torture");
         map.put(1823, "Kill by physical assault");
-        map.put(183, "Conduct suicide, car, or other non-military bombing, not spec below");
+        map.put(183, "Conduct suicide, car, or other non-military bombing");
         map.put(1831, "Carry out suicide bombing");
         map.put(1832, "Carry out car bombing");
         map.put(1833, "Carry out roadside bombing");
@@ -57,7 +57,6 @@ public class WebController {
     @GetMapping("/{eventCode}")
     @ResponseBody
     public List<TerroristAttack> getTerroristAttacksByCategory(@PathVariable Integer eventCode) {
-        TerroristAttack t = new TerroristAttack();
         return terroristAttackRepository.findTerroristAttackByEventCodeOrderByDate(eventCode).stream().filter(distinctByKey(TerroristAttack::getUrls)).collect(Collectors.toList());
     }
 

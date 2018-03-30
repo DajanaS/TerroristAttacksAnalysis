@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {TerroristAttack} from '../model/terrorist-attack';
 import {RichSnippet} from '../model/rich-snippet';
 import {WebService} from '../web.service';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-analysis-details',
@@ -15,17 +16,17 @@ export class AnalysisDetailsComponent implements OnInit {
   terroristAttack: TerroristAttack;
   eventCode: number;
 
-  constructor(private web: WebService) {
+  constructor(private web: WebService, private route: ActivatedRoute) {
   }
 
   ngOnInit() {
-    this.web.eventCodeChanged$.subscribe(code => {
+    this.route.params.subscribe(code => {
       this.terroristAttack = undefined;
-      this.eventCode = code;
+      this.eventCode = +code['id'];
       this.showDetails = false;
       this.web.getTerroristAttacksByCategory(this.eventCode).subscribe(attacks => {
           this.attacks = attacks;
-          this.createRichSnipperForEachAttack();
+          this.createRichSnippetForEachAttack();
         },
         error2 => console.log(error2));
     }, error2 => console.log(error2));
@@ -38,11 +39,11 @@ export class AnalysisDetailsComponent implements OnInit {
     // TODO: check if .date and all the others exist... for future: send the attackID only and make this check in back-end
     this.web.getRelatedTerroristAttacks(attack.countryCode, this.terroristAttack.eventCode, this.terroristAttack.date).subscribe(attacks => {
       this.attacks = attacks;
-      this.createRichSnipperForEachAttack();
+      this.createRichSnippetForEachAttack();
     }, error2 => console.log(error2));
   }
 
-  createRichSnipperForEachAttack() {
+  createRichSnippetForEachAttack() {
     this.richSnippets = [];
     for (let i = 0; i < this.attacks.length; i++) {
       this.web.getMetaDataFromURL(this.attacks[i].urls).subscribe(response => {

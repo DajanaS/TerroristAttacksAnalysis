@@ -1,56 +1,70 @@
-<div *ngIf="showDetails && terroristAttack" class="card" style="border: none;">
-  <h4 class="card-title">Terrorist attack's detailed analysis</h4>
-  <h6 class="card-subtitle text-muted">Data is taken at 10.03.2018</h6>
-  <div class="card-text" style="margin: 15px;">
-    <table>
-      <tr *ngIf="terroristAttack.country">
-        <th>Country:</th>
-        <td>{{terroristAttack.country}}</td>
-      </tr>
-      <tr *ngIf="terroristAttack.date">
-        <th>Date:</th>
-        <td>{{terroristAttack.date | date}}</td>
-      </tr>
-      <tr *ngIf="terroristAttack.numSources">
-        <th>Number of sources:</th>
-        <td>{{terroristAttack.numSources}}</td>
-      </tr>
-      <tr>
-        <th>Scale:</th>
-        <td>{{terroristAttack.scale}}</td>
-      </tr>
-      <tr>
-    </table>
-  </div>
-  <div class=" row
-      ">
-    <div class="col">
-      <p class="related">Related by country:</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="data">
+  <div *ngIf="showDetails && terroristAttack" class="card" style="border: none;">
+    <h4 class="card-title">Terrorist attack's detailed analysis</h4>
+    <h6 class="card-subtitle text-muted">Data is taken at 10.03.2018</h6>
+    <div class="card-text" style="margin: 15px;">
+      <table>
+        <tr *ngIf="terroristAttack.country">
+          <th>Country:</th>
+          <td>{{terroristAttack.country}}</td>
+        </tr>
+        <tr *ngIf="terroristAttack.date">
+          <th>Date:</th>
+          <td>{{terroristAttack.date | date}}</td>
+        </tr>
+        <tr *ngIf="terroristAttack.numSources">
+          <th>Number of sources:</th>
+          <td>{{terroristAttack.numSources}}</td>
+        </tr>
+        <tr>
+          <th>Scale:</th>
+          <td>{{terroristAttack.scale}}</td>
+        </tr>
+        <tr>
+      </table>
     </div>
-    <div class="col">
-      <a class="read-more" href={{terroristAttack.urls}} target="_blank">Read more
-        <small>>></small>
-      </a>
+    <div class="row">
+      <div class="col">
+        <p class="related">Related events:</p>
+      </div>
+      <div class="col">
+        <a class="read-more" href={{terroristAttack.urls}} target="_blank">Read more
+          <small>>></small>
+        </a>
+      </div>
+    </div>
+    <div class="container">
+      <div class="item" *ngFor="let item of richSnippets">
+        <img src={{item.img}}/><br/>
+        <a href="{{item.url}}" target="_blank">{{item.title}}</a>
+        <p class="small-details">{{item.attack.date | date}} - {{item.attack.countryCode}}</p>
+      </div>
+      <div *ngIf="richSnippets.length==0">Loading... or not available...</div>
     </div>
   </div>
-  <div class="container">
-    <div class="item" *ngFor="let item of richSnippets">
-      <img src={{item.img}}/><br/>
-      <a href="{{item.url}}" target="_blank">{{item.title}}</a>
-      <p class="small-details">{{item.attack.date | date}} - {{item.attack.countryCode}}</p>
-    </div>
-    <div *ngIf="richSnippets.length==0">Loading... or not available...</div>
-  </div>
-</div>
 
-<div *ngIf="!showDetails && eventCode" class="card" style="border: none;">
-  <h4 class="card-title">Events by chosen category</h4>
-  <div class="container">
-    <div class="item" *ngFor="let item of richSnippets">
-      <img src={{item.img}}/><br/>
-      <button class="btn-link" (click)="showEventDetails(item.attack)">{{item.title}}</button>
-      <p class="small-details">{{item.attack.date | date}} - {{item.attack.countryCode}}</p>
+  <div *ngIf="!showDetails && eventCode" class="card" style="border: none;">
+    <h4 class="card-title">Events by chosen category</h4>
+    <div class="container">
+      <div class="item" *ngFor="let item of richSnippets">
+        <img src={{item.img}}/><br/>
+        <button class="btn-link" (click)="showEventDetails(item.attack)">{{item.title}}</button>
+        <p class="small-details">{{item.attack.date | date}} - {{item.attack.countryCode}}</p>
+      </div>
+      <div *ngIf="richSnippets.length==0">Loading... or not available...</div>
     </div>
-    <div *ngIf="richSnippets.length==0">Loading... or not available...</div>
   </div>
 </div>
+</body>
+</html>
