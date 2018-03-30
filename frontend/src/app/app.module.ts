@@ -5,6 +5,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {AppComponent} from './app.component';
 import {AnalysisDetailsComponent} from './analysis-details/analysis-details.component';
 import {WebService} from './web.service';
+import {DatePipe} from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,7 @@ import {WebService} from './web.service';
     BrowserModule,
     HttpClientModule
   ],
-  providers: [WebService],
+  providers: [WebService, DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule {

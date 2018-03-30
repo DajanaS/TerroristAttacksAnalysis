@@ -35,7 +35,8 @@ export class AnalysisDetailsComponent implements OnInit {
     this.eventCode = undefined;
     this.terroristAttack = attack;
     this.showDetails = true;
-    this.web.getTerroristAttacksByCountry(attack.countryCode).subscribe(attacks => {
+    // TODO: check if .date and all the others exist... for future: send the attackID only and make this check in back-end
+    this.web.getRelatedTerroristAttacks(attack.countryCode, this.terroristAttack.eventCode, this.terroristAttack.date).subscribe(attacks => {
       this.attacks = attacks;
       this.createRichSnipperForEachAttack();
     }, error2 => console.log(error2));
@@ -51,12 +52,14 @@ export class AnalysisDetailsComponent implements OnInit {
   }
 
   createRichSnippet(response, attack: TerroristAttack) {
-    const url = response.url.substring(0, 4) !== 'http' ? 'https://' + response.url : response.url;
-    let title = response.title != null ? response.title : response.url;
-    if (title.split(' ').length > 6) {
-      title = title.split(/\s+/).slice(0, 6).join(' ') + '...';
+    if (response.url) {
+      const url = response.url.substring(0, 4) !== 'http' ? 'https://' + response.url : response.url;
+      let title: string = response.title != null ? response.title : response.url;
+      if (title.split(' ').length > 6) {
+        title = title.split(' ').slice(0, 6).join(' ') + '...';
+      }
+      const image = response.image != null ? response.image : '../../assets/img/logo.png';
+      this.richSnippets.push(new RichSnippet(title, image, url, attack));
     }
-    const image = response.images != null ? response.images[0].url : '../../assets/img/logo.png';
-    this.richSnippets.push(new RichSnippet(title, image, url, attack));
   }
 }

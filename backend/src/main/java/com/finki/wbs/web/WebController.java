@@ -3,11 +3,18 @@ package com.finki.wbs.web;
 import com.finki.wbs.model.TerroristAttack;
 import com.finki.wbs.repository.TerroristAttackRepository;
 import com.google.common.collect.Lists;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
+import java.io.IOException;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 @CrossOrigin
 @RestController
@@ -28,8 +35,8 @@ public class WebController {
 
     @GetMapping("/categories")
     @ResponseBody
-    public HashMap<Integer, String> getAllDistinctCategoriesOfAttacks() {
-        HashMap<Integer, String> map = new HashMap<>();
+    public Map<Integer, String> getAllDistinctCategoriesOfAttacks() {
+        Map<Integer, String> map = new HashMap<>();
         map.put(18, "Assault");
         map.put(180, "Use unconventional violence, not specified below");
         map.put(181, "Abduct, hijack, or take hostag");
@@ -50,12 +57,39 @@ public class WebController {
     @GetMapping("/{eventCode}")
     @ResponseBody
     public List<TerroristAttack> getTerroristAttacksByCategory(@PathVariable Integer eventCode) {
-        return terroristAttackRepository.findTerroristAttackByEventCode(eventCode);
+        TerroristAttack t = new TerroristAttack();
+        return terroristAttackRepository.findTerroristAttackByEventCodeOrderByDate(eventCode).stream().filter(distinctByKey(TerroristAttack::getUrls)).collect(Collectors.toList());
     }
 
-    @GetMapping("/country/{countryCode}")
+    private static <T> Predicate<T> distinctByKey(Function<? super T, ?> keyExtractor) {
+        Set<Object> seen = ConcurrentHashMap.newKeySet();
+        return t -> seen.add(keyExtractor.apply(t));
+    }
+
+    @GetMapping("/country/{countryCode}/from/{eventCode}/date/{dateAfter}")
     @ResponseBody
-    public List<TerroristAttack> getTerroristAttacksByEventCodeAndCountryCode(@PathVariable String countryCode) {
-        return terroristAttackRepository.findTerroristAttackByCountryCode(countryCode);
+    public List<TerroristAttack> getTerroristAttacksByEventCodeAndCountryCode(@PathVariable String countryCode, @PathVariable Integer eventCode, @PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateAfter) {
+        // TODO: AndDateAfter instead AndDate after having the new data and also could pass the current attack-id as parameter instead the last two so we can filter the given not to return it as related.
+        return terroristAttackRepository.findTerroristAttackByCountryCodeAndEventCodeAndDateOrderByDate(countryCode, eventCode, dateAfter);
+    }
+
+    @PostMapping("/metadata")
+    @ResponseBody
+    public Map<String, String> getMetadata(@RequestBody String url) {
+        Map<String, String> map = new HashMap<>();
+        try {
+            Document doc = Jsoup.connect(url).get();
+            map.put("url", url);
+            map.put("title", doc.title());
+            doc.select("meta").forEach(element -> {
+                if (element.hasAttr("property") && element.attr("property").equals("og:image"))
+                    map.put("image", element.attr("content"));
+            });
+        } catch (IOException e) {
+            map.put("url", "");
+            System.out.println(e.getMessage() + ": " + url);
+        } finally {
+            return map;
+        }
     }
 }

@@ -4,13 +4,12 @@ import com.finki.wbs.model.TerroristAttack;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 
 @Repository
 public interface TerroristAttackRepository extends JpaRepository<TerroristAttack, Integer> {
-    List<TerroristAttack> findAll();
+    List<TerroristAttack> findTerroristAttackByEventCodeOrderByDate(Integer eventCode);
 
-    List<TerroristAttack> findTerroristAttackByEventCode(Integer eventCode);
-
-    List<TerroristAttack> findTerroristAttackByCountryCode(String countryCode);
+    List<TerroristAttack> findTerroristAttackByCountryCodeAndEventCodeAndDateOrderByDate(String countryCode, Integer eventCode, Date dateAfter);
 }
