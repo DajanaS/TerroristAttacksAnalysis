@@ -8,6 +8,7 @@ import {WebService} from './web.service';
 import {DatePipe} from '@angular/common';
 import {AppRoutingModule} from './app-routing.module';
 import {HomeComponent} from './home/home.component';
+import {AgmCoreModule} from '@agm/core';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,10 @@ import {HomeComponent} from './home/home.component';
   imports: [
     BrowserModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyBZa9Zw8uFQUVP7JKQ8zymjB0mkfftJJrk'
+    })
   ],
   providers: [WebService, DatePipe],
   bootstrap: [AppComponent]

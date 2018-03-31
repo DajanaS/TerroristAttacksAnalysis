@@ -9,11 +9,9 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-<div class="container-fluid">
-  <div class="row content">
-    <img id="map" src="../../assets/img/world-map.png"/>
-  </div>
-</div>
+<agm-map [latitude]="lat" [longitude]="lng">
+  <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+</agm-map>
 <div class="container-fluid" id="footer">
   <div class="item" *ngFor="let key of keys"
        [ngStyle]="{'background-image': 'url(../../assets/img/categories/' + key + '.jpg)'}">

@@ -11,6 +11,9 @@ export class HomeComponent {
   eventNames: Object;
   keys;
 
+  lat = 51.678418;
+  lng = 7.809007;
+
   constructor(private web: WebService, private router: Router) {
     this.initializeEventNames();
   }

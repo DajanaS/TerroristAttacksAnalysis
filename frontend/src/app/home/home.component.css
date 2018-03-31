@@ -6,7 +6,7 @@ h2 {
   color: lightsalmon;
 }
 
-.row.content {
+agm-map {
   height: 52.5vh;
 }
 
@@ -25,12 +25,6 @@ h2 {
   height: 17vh;
   margin: 2.5vh 5vh;
   border: solid;
-}
-
-#map {
-  height: 98%;
-  display: block;
-  margin: auto;
 }
 
 .category-title {
