@@ -9,6 +9,8 @@ CREATE TABLE vbs.main_table(
 		num_sources integer default null,
 		geo_country text default null,
 		geo_country_code text default null,
+		geo_lat float default null,
+		geo_long float default null,
 		sourceurls text default null)
 
 Then from the .csv file fill in the table:

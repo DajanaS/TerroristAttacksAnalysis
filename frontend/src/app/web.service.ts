@@ -26,4 +26,8 @@ export class WebService {
   getMetaDataFromURL(url) {
     return this.http.post(this.api + '/metadata', url);
   }
+
+  getTerroristAttacksFromYesterday(): Observable<TerroristAttack[]> {
+    return this.http.get<TerroristAttack[]>(this.api + '/yesterday');
+  }
 }

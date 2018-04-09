@@ -10,7 +10,8 @@
 </head>
 <body>
 <agm-map [latitude]="lat" [longitude]="lng">
-  <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+  <agm-marker *ngFor="let attack of yesterdayAttacks" [latitude]="attack.latitude"
+              [longitude]="attack.longitude"></agm-marker>
 </agm-map>
 <div class="container-fluid" id="footer">
   <div class="item" *ngFor="let key of keys"
