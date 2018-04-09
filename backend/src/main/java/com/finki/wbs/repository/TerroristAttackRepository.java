@@ -9,7 +9,9 @@ import java.util.List;
 
 @Repository
 public interface TerroristAttackRepository extends JpaRepository<TerroristAttack, Integer> {
-    List<TerroristAttack> findTerroristAttackByEventCodeOrderByDate(Integer eventCode);
+    List<TerroristAttack> findTerroristAttackByEventCodeOrderByDateDesc(Integer eventCode);
 
-    List<TerroristAttack> findTerroristAttackByCountryCodeAndEventCodeAndDateOrderByDate(String countryCode, Integer eventCode, Date dateAfter);
+    List<TerroristAttack> findTerroristAttackByCountryCodeAndEventCodeAndDateOrderByDateDesc(String countryCode, Integer eventCode, Date dateAfter);
+
+    List<TerroristAttack> findTerroristAttackByDate(Date date);
 }

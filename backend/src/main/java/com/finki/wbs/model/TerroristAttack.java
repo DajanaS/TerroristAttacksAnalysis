@@ -35,6 +35,12 @@ public class TerroristAttack {
     @Column(name = "geo_country_code")
     private String countryCode;
 
+    @Column(name = "geo_lat")
+    private Double latitude;
+
+    @Column(name = "geo_long")
+    private Double longitude;
+
     @Column(name = "sourceurls")
     private String urls;
 }

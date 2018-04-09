@@ -10,6 +10,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
@@ -57,7 +59,8 @@ public class WebController {
     @GetMapping("/{eventCode}")
     @ResponseBody
     public List<TerroristAttack> getTerroristAttacksByCategory(@PathVariable Integer eventCode) {
-        return terroristAttackRepository.findTerroristAttackByEventCodeOrderByDate(eventCode).stream().filter(distinctByKey(TerroristAttack::getUrls)).collect(Collectors.toList());
+        return terroristAttackRepository.findTerroristAttackByEventCodeOrderByDateDesc(eventCode).stream()
+                .filter(distinctByKey(TerroristAttack::getUrls)).collect(Collectors.toList());
     }
 
     private static <T> Predicate<T> distinctByKey(Function<? super T, ?> keyExtractor) {
@@ -69,7 +72,7 @@ public class WebController {
     @ResponseBody
     public List<TerroristAttack> getTerroristAttacksByEventCodeAndCountryCode(@PathVariable String countryCode, @PathVariable Integer eventCode, @PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateAfter) {
         // TODO: AndDateAfter instead AndDate after having the new data and also could pass the current attack-id as parameter instead the last two so we can filter the given not to return it as related.
-        return terroristAttackRepository.findTerroristAttackByCountryCodeAndEventCodeAndDateOrderByDate(countryCode, eventCode, dateAfter);
+        return terroristAttackRepository.findTerroristAttackByCountryCodeAndEventCodeAndDateOrderByDateDesc(countryCode, eventCode, dateAfter);
     }
 
     @PostMapping("/metadata")
@@ -90,5 +93,28 @@ public class WebController {
         } finally {
             return map;
         }
+    }
+
+    @GetMapping("/yesterday")
+    @ResponseBody
+    public List<TerroristAttack> getTerroristAttacksFromYesterday() {
+        return terroristAttackRepository.findTerroristAttackByDate(yesterday()).stream()
+                .filter(distinctByKeys(TerroristAttack::getLatitude, TerroristAttack::getLongitude)).collect(Collectors.toList());
+    }
+
+    private Date yesterday() {
+        final Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, -1);
+        return cal.getTime();
+    }
+
+    private static <T> Predicate<T> distinctByKeys(Function<? super T, ?>... keyExtractors) {
+        final Map<List<?>, Boolean> seen = new ConcurrentHashMap<>();
+        return t -> {
+            final List<?> keys = Arrays.stream(keyExtractors)
+                    .map(ke -> ke.apply(t))
+                    .collect(Collectors.toList());
+            return seen.putIfAbsent(keys, Boolean.TRUE) == null;
+        };
     }
 }
