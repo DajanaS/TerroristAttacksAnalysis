@@ -21,7 +21,7 @@ import {AgmCoreModule} from '@agm/core';
     HttpClientModule,
     AppRoutingModule,
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyBZa9Zw8uFQUVP7JKQ8zymjB0mkfftJJrk'
+      apiKey: '[please insert your own API key here]'
     })
   ],
   providers: [WebService, DatePipe],
