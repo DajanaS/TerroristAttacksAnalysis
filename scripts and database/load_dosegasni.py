@@ -34,7 +34,7 @@ while 1:
 				next(f)  
 				cur.copy_from(f, 'vbs.tmp_main_table', null='None')
 			conn.commit()
-			print("downloaded, extracted and set in the table")
+			print("downloaded, extracted and set in the table tmp_main_table")
 			cur.execute('select * from vbs.fill_main()')
 			print ('inserted')
 			x += timedelta(days=1)
