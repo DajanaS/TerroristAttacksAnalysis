@@ -12,12 +12,11 @@
 <agm-map [latitude]="lat" [longitude]="lng">
   <agm-marker *ngFor="let attack of yesterdayAttacks"
               [latitude]="attack.latitude"
-              [longitude]="attack.longitude">
+              [longitude]="attack.longitude"
+              [iconUrl]="'../../assets/img/symbols/' + attack.eventCode + '.png'">
     <agm-info-window>
       <div class="container-fluid" style="max-width: 150px; align-content: center">
-        <img class="category-img" [src]="'../../assets/img/categories/' + attack.eventCode + '.jpg'">
-        <p class="description"><b>Type of event:</b>
-          {{eventNames[attack.eventCode]}}</p>
+        <b>Type of event:</b> {{eventNames[attack.eventCode]}}
       </div>
     </agm-info-window>
   </agm-marker>

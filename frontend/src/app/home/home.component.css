@@ -42,12 +42,6 @@ agm-map {
   border: solid;
 }
 
-.description {
-  display: block;
-  margin: auto;
-  border: 1px dotted gray;
-}
-
 .category-img {
   width: 75px;
   height: 75px;
